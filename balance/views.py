@@ -14,7 +14,7 @@ def home():
 
 # - Función borrar  -- DONE
 # - Operar con la BD -- DONE
-# - Botón de borrado en cada movimiento
+# - Botón de borrado en cada movimiento -- DONE
 # - Plantilla con el resultado -- DONE
 
 @app.route('/borrar/<int:id>')
