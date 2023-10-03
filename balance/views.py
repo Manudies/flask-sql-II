@@ -30,6 +30,10 @@ def eliminar(id):
 @app.route('/editar/<int:id>')
 def actualizar(id):
     if request.method == 'GET':
+        # TODO: obtener el movimiento que se va a editar por su ID
+        # SELECT id, fecha, concepto, tipo, cantidad FROM movimientos WHERE id=?
+        # TODO: acceder aquí por un enlace en la lista de movimientos
+        # (al lado del botón eliminar)
         movimiento = {
             'id': 55,
             'fecha': date.fromisoformat('2023-10-03'),
