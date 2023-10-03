@@ -47,3 +47,22 @@ class DBManager:
 
         # 6. Devolver los resultados
         return self.registros
+
+    def borrar(self, id):
+        """
+        DELETE FROM movimientos WHERE id=?
+        """
+        sql = 'DELETE FROM movimientos WHERE id=?'
+        conexion = sqlite3.connect(self.ruta)
+        cursor = conexion.cursor()
+
+        resultado = False
+        try:
+            cursor.execute(sql, (id,))
+            conexion.commit()
+            resultado = True
+        except:
+            conexion.rollback()
+
+        conexion.close()
+        return resultado
