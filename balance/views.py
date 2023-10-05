@@ -30,17 +30,11 @@ def eliminar(id):
 @app.route('/editar/<int:id>')
 def actualizar(id):
     if request.method == 'GET':
-        # TODO: obtener el movimiento que se va a editar por su ID
-        # SELECT id, fecha, concepto, tipo, cantidad FROM movimientos WHERE id=?
+        db = DBManager(RUTA)
+        movimiento = db.obtenerMovimiento(id)
         # TODO: acceder aquí por un enlace en la lista de movimientos
         # (al lado del botón eliminar)
-        movimiento = {
-            'id': 55,
-            'fecha': date.fromisoformat('2023-10-03'),
-            'concepto': 'Curso de formularios en Python',
-            'tipo': 'I',
-            'cantidad': 55.955874587
-        }
+
         formulario = MovimientoForm(data=movimiento)
         return render_template('form_movimiento.html', form=formulario)
     return f'TODO: tratar el método POST para actualizar el movimiento {id}'

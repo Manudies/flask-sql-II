@@ -1,3 +1,4 @@
+from datetime import date
 import sqlite3
 
 """
@@ -68,6 +69,16 @@ class DBManager:
         return resultado
 
     def obtenerMovimiento(self, id):
+        """
+        SELECT id, fecha, concepto, tipo, cantidad
+          FROM movimientos
+         WHERE tipo=?
+           and fecha=?
+
+         ('G','2023-10-02')
+         ('I','2023-10-05')
+        """
+
         consulta = 'SELECT id, fecha, concepto, tipo, cantidad FROM movimientos WHERE id=?'
 
         conexion = sqlite3.connect(self.ruta)
@@ -86,6 +97,7 @@ class DBManager:
             for nombre in nombres_columna:
                 movimiento[nombre] = datos[indice]
                 indice += 1
+            movimiento['fecha'] = date.fromisoformat(movimiento['fecha'])
             resultado = movimiento
 
         conexion.close()
