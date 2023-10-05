@@ -82,11 +82,18 @@ tr.error+tr td {
     padding-bottom: 13px;
 }
 
+a:link.delete,
+a:visited.delete,
+a:active.delete,
+a.delete {
+    color: red;
+}
+
 .mini-boton {
-    border: solid thin darkgray;
+    /* border: solid thin darkgray; */
     border-radius: 4px;
     padding: 0 3px;
-    background-color: lightgray;
+    /* background-color: lightgray; */
 }
 
 a.mini-boton:hover {
