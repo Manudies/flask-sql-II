@@ -14,6 +14,14 @@ class DBManager:
     def __init__(self, ruta):
         self.ruta = ruta
 
+    def conectar(self):
+        conexion = sqlite3.connect(self.ruta)
+        cursor = conexion.cursor()
+        return conexion, cursor
+
+    def desconectar(self, conexion):
+        conexion.close()
+
     def consultaSQL(self, consulta):
 
         # 1. Conectar a la base de datos
@@ -81,8 +89,8 @@ class DBManager:
 
         consulta = 'SELECT id, fecha, concepto, tipo, cantidad FROM movimientos WHERE id=?'
 
-        conexion = sqlite3.connect(self.ruta)
-        cursor = conexion.cursor()
+        conexion, cursor = self.conectar()
+
         cursor.execute(consulta, (id,))
 
         datos = cursor.fetchone()
@@ -100,5 +108,19 @@ class DBManager:
             movimiento['fecha'] = date.fromisoformat(movimiento['fecha'])
             resultado = movimiento
 
-        conexion.close()
+        self.desconectar(conexion)
+        return resultado
+
+    def consultaConParametros(self, consulta, params):
+        conexion, cursor = self.conectar()
+
+        resultado = False
+        try:
+            cursor.execute(consulta, params)
+            conexion.commit()
+            resultado = True
+        except:
+            conexion.rollback()
+
+        self.desconectar(conexion)
         return resultado
