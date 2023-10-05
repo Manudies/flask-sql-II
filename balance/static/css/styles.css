@@ -114,3 +114,15 @@ a.mini-boton:hover {
     display: inline-block;
     margin-right: 30px;
 }
+
+.lista-errores {
+    background-color: rgba(255, 0, 0, .3);
+    border: solid thin #600;
+    padding: 16px;
+    color: #600;
+}
+
+.mensaje-error {
+    color: #600;
+    font-weight: bold;
+}
