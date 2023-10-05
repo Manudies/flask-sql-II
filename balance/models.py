@@ -66,3 +66,27 @@ class DBManager:
 
         conexion.close()
         return resultado
+
+    def obtenerMovimiento(self, id):
+        consulta = 'SELECT id, fecha, concepto, tipo, cantidad FROM movimientos WHERE id=?'
+
+        conexion = sqlite3.connect(self.ruta)
+        cursor = conexion.cursor()
+        cursor.execute(consulta, (id,))
+
+        datos = cursor.fetchone()
+        resultado = None
+        if datos:
+            nombres_columna = []
+            for columna in cursor.description:
+                nombres_columna.append(columna[0])
+
+            movimiento = {}
+            indice = 0
+            for nombre in nombres_columna:
+                movimiento[nombre] = datos[indice]
+                indice += 1
+            resultado = movimiento
+
+        conexion.close()
+        return resultado
