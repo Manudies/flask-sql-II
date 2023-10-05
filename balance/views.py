@@ -1,6 +1,6 @@
 from datetime import date
 
-from flask import render_template, request
+from flask import redirect, render_template, request, url_for
 
 from . import RUTA, app
 from .forms import MovimientoForm
@@ -38,6 +38,18 @@ def actualizar(id):
     if request.method == 'POST':
         form = MovimientoForm(data=request.form)
         if form.validate():
-            return "Guardar el movimiento"
+            db = DBManager(RUTA)
+            consulta = 'UPDATE movimientos SET fecha=?, concepto=?, tipo=?, cantidad=? WHERE id=?'
+            parametros = (
+                form.fecha.data,
+                form.concepto.data,
+                form.tipo.data,
+                float(form.cantidad.data),
+                form.id.data
+            )
+            resultado = db.consultaConParametros(consulta, parametros)
+            if resultado:
+                return redirect(url_for('home'))
+            return "El movimiento no se ha podido guardar en la base de datos"
         else:
-            return "Los datos no son correctos. (Volver al formulario)"
+            return form.errors

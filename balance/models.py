@@ -1,5 +1,5 @@
-from datetime import date
 import sqlite3
+from datetime import date
 
 """
 SELECT id, fecha, concepto, tipo, cantidad FROM movimientos
@@ -119,7 +119,8 @@ class DBManager:
             cursor.execute(consulta, params)
             conexion.commit()
             resultado = True
-        except:
+        except Exception as ex:
+            print(ex)
             conexion.rollback()
 
         self.desconectar(conexion)
